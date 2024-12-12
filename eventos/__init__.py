@@ -22,19 +22,20 @@ def listar_evento(eventos):
     print('LISTAR EVENTOS')
     for chave in eventos:
         print(f'{eventos[chave][0]}, {eventos[chave][1]}, {eventos[chave][2]}, {eventos[chave][3]}')
-        print(eventos[chave][4])
+
 
 def remover_evento(usuario, eventos):
     print('REMOVER EVENTO')
     titulo = input('Digite o titulo do evento a ser removido:')
     remover = []
     for chave in eventos:
-        if eventos[chave][4] == usuario[0] and eventos[chave][0] == titulo:
+        if eventos[chave][0] == titulo:
+            if usuario[0] in eventos[chave][4]:
                 remover.append(chave)
                 print('Evento removido com sucesso.')
-        else:
-            print('Voce não tem permissão para remover esse evento.')
-            break
+            else:
+                print('Voce não tem permissão para remover esse evento.')
+                break
     for chave in remover:
         eventos.pop(chave)
     print(eventos)
@@ -96,15 +97,14 @@ def valor_arrecadado(usuario, eventos):
     print('VALOR ARRECADADO')
     titulo = input('Digite o titulo do evento: ')
 
-    if titulo in eventos:
-        for chave in eventos:
-            if usuario[0] in [eventos[chave][4]]:
-                valor_total = eventos[chave][6]
-                print(f'O valor arrecadado deste evento é de R${valor_total}  ')
+    for chave in eventos:
+        if eventos[chave][0] == titulo:
+            if usuario[0] in eventos[chave][4]:
+                print(f'O valor arrecadado deste evento é de R${eventos[chave][6]}  ')
             else:
                 print('Usuario não tem permissão. Tente novamente.')
-    else:
-        print('Evento não encontrado.')
+        else:
+            print('Evento não encontrado.')
 
 
 def fazer_feedback(usuario, eventos):
